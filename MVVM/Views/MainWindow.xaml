@@ -1,0 +1,35 @@
+﻿<Window x:Class="MVVM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MVVM" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="550" Width="800">
+    <Grid>
+        <StackPanel>
+            <ComboBox Name="myCombobox" ItemsSource="{Binding AllPrinters}"
+                      DisplayMemberPath="Model"
+                      >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction
+                            Command="{Binding SelectedCommand}"
+                            CommandParameter="{Binding ElementName=myCombobox,Path=SelectedItem}"
+                            ></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+            <Label FontSize="30">Model</Label>
+            <TextBox IsEnabled="{Binding HasClickEdit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding SelectedPrinter.Model}" FontSize="26" FontWeight="ExtraBlack"></TextBox>
+            <Label FontSize="30">Vendor</Label>
+            <TextBox IsEnabled="{Binding HasClickEdit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding SelectedPrinter.Vendor}" FontSize="26" FontWeight="ExtraBlack"></TextBox>
+            <Label FontSize="30">Color</Label>
+            <TextBox IsEnabled="{Binding HasClickEdit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding SelectedPrinter.Color}" FontSize="26" FontWeight="ExtraBlack"></TextBox>
+            <Button Command="{Binding EditCommand}" FontSize="26" FontWeight="ExtraBlack" >Edit</Button>
+            <Button Command="{Binding SaveCommand}" IsEnabled="{Binding HasClickEdit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontSize="26" FontWeight="ExtraBlack" >Save</Button>
+            <Button Command="{Binding AddPrinterCommand}"  FontSize="26" FontWeight="ExtraBlack" >Add New Printer</Button>
+            <Button Command="{Binding SaveAddCommand}" IsEnabled="{Binding HasClickAdd,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontSize="26" FontWeight="ExtraBlack" >Save Add</Button>
+        </StackPanel>
+    </Grid>
+</Window>
